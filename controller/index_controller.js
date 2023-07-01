@@ -1,6 +1,8 @@
 const { Pool } = require("pg");
-
+const fs = require("fs");
 require("dotenv").config();
+
+const sslCert = fs.readFileSync("controller/us-east-2-bundle.pem");
 
 const pool = new Pool({
   host: process.env.ENDPOINT,
@@ -9,6 +11,9 @@ const pool = new Pool({
   database: process.env.DATABASE,
   port: process.env.PORT,
   statement_timeout: 10000,
+  ssl: {
+    ca: sslCert,
+  },
 });
 const getMusic = (req, res) => {
   pool.query("SELECT * FROM kmusic.songs", (err, result) => {
