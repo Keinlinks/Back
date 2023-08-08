@@ -75,8 +75,6 @@ const updateMusic = (req, res) => {
   console.log("actualizar...");
 };
 
-module.exports = { getMusic, postMusic, deleteMusic, updateMusic };
-
 function validarJSON(json) {
   if (
     !json.nombre ||
@@ -99,3 +97,16 @@ function validarJSON_id(json) {
   }
   return true;
 }
+//----------------------------------------------------------------
+
+const getWork = (req, res) => {
+  pool.query("SELECT * FROM kwork.works", (err, result) => {
+    if (err) {
+      console.log(err);
+    } else {
+      console.log(result.rows);
+      res.json(result.rows);
+    }
+  });
+};
+module.exports = { getMusic, postMusic, deleteMusic, updateMusic, getWork };
